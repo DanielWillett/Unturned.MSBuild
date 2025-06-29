@@ -80,15 +80,8 @@ The following items can be included in an `<ItemGroup>` to add references.
 
 # Legal
 
-Usage of the libraries referenced by this package are subject to Unturned's EULA:
-https://store.steampowered.com/eula/304930_eula_1
-
-Unity's reference-only license:
-https://unity.com/legal/licenses/unity-reference-only-license,
-
-and any licenses of third-party libraries used by Unturned:
-https://github.com/rlabrecque/Steamworks.NET
+Usage of the libraries referenced by this package are subject to Unturned's EULA, https://store.steampowered.com/eula/304930_eula_1, Unity's reference-only license, https://unity.com/legal/licenses/unity-reference-only-license, and any licenses of third-party libraries used by Unturned.
 
 The content of this package (build files, etc) is licensed under the MIT license.
 
-The Unturned Logo used in the package image is property of SDG (Smartly Dressed Games).
+The shape of the MSBuild Logo used in the package image is property of Microsoft.
