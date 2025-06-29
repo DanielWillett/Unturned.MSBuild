@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+	<metadata>
+		<id>Unturned.MSBuild</id>
+		<title>Unturned MSBuild Content</title>
+		<version>1.0.0-test3</version>
+		<authors>Daniel Willett</authors>
+		<description>A build-only package to add references for the Unturned, Unity, and RocketMod/LDM libraries.</description>
+		<repository type="git" url="https://github.com/DanielWillett/Unturned.MSBuild.git" branch="master" commit="" />
+    <projectUrl>https://github.com/DanielWillett/Unturned.MSBuild</projectUrl>
+    <license type="file">files/License.md</license>
+		<readme>files/Readme.md</readme>
+		<icon>files/Icon.png</icon>
+		<tags>unturned rocketmod plugin sdg</tags>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <developmentDependency>true</developmentDependency>
+	</metadata>
+	<files>
+		<file src="build/Unturned.MSBuild.targets" target="buildTransitive"/>
+		<file src="../README.md" target="files/Readme.md"/>
+		<file src="../LICENSE.md" target="files/License.md"/>
+		<file src="../Icon.png" target="files/Icon.png"/>
+	</files>
+</package>
