@@ -6,10 +6,10 @@
 
 	<PropertyGroup>
 
-		<UnityVersion Condition="$(UnityVersion) == ''">2021.3.29f1</UnityVersion>
+		<UnityVersion Condition="'$(UnityVersion)' == ''">2021.3.45f2</UnityVersion>
 
-		<AppendRuntimeIdentifierToOutputPath Condition="'$(AppendRuntimeIdentifierToOutputPath)' == '' And $(TargetFrameworks) == ''">False</AppendRuntimeIdentifierToOutputPath>
-		<AppendTargetFrameworkToOutputPath Condition="'$(AppendTargetFrameworkToOutputPath)' == '' And $(TargetFrameworks) == ''">False</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath Condition="'$(AppendRuntimeIdentifierToOutputPath)' == '' And '$(TargetFrameworks)' == ''">False</AppendRuntimeIdentifierToOutputPath>
+		<AppendTargetFrameworkToOutputPath Condition="'$(AppendTargetFrameworkToOutputPath)' == '' And '$(TargetFrameworks)' == ''">False</AppendTargetFrameworkToOutputPath>
 
 		<UnturnedBuild Condition="$(UnturnedBuild) != 'Client'">Server</UnturnedBuild>
 
@@ -20,7 +20,7 @@
     <UnturnedReferenceDebugLog Condition="'$(UnturnedReferenceDebugLog)' == ''">False</UnturnedReferenceDebugLog>
 
     <!-- Unity v2021.3.29f1 LTS Defines  -->
-		<DefineConstants>$(DefineConstants);UNITY_2021_3_29;UNITY_2021_3;UNITY_2021;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER</DefineConstants>
+		<DefineConstants>$(DefineConstants);UNITY_2021_3_45;UNITY_2021_3;UNITY_2021;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER</DefineConstants>
 		<DefineConstants>$(DefineConstants);UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER</DefineConstants>
 		<DefineConstants>$(DefineConstants);UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER</DefineConstants>
 		<DefineConstants>$(DefineConstants);UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS</DefineConstants>
@@ -41,15 +41,15 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<UnturnedReferencesCopyOutput Condition="$(UnturnedReferencesCopyOutput) == ''">$(MSBuildStartupDirectory)/Libraries</UnturnedReferencesCopyOutput>
+		<UnturnedReferencesCopyOutput Condition="'$(UnturnedReferencesCopyOutput)' == ''">$(MSBuildStartupDirectory)/Libraries</UnturnedReferencesCopyOutput>
     <_HomeDir>$([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))</_HomeDir>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="$(U3DSInstallDir) != '' And $(UnturnedBuild) == 'Server' And exists('$(U3DSInstallDir)')">
+	<PropertyGroup Condition="'$(U3DSInstallDir)' != '' And '$(UnturnedBuild)' == 'Server' And exists('$(U3DSInstallDir)')">
 		<UnturnedInstallDir>$(U3DSInstallDir)</UnturnedInstallDir>
 	</PropertyGroup>
 
-  <PropertyGroup Condition="$(UnturnedInstallDir) != '' And !exists('$(UnturnedInstallDir)')">
+  <PropertyGroup Condition="'$(UnturnedInstallDir)' != '' And !exists('$(UnturnedInstallDir)')">
     <UnturnedInstallDir></UnturnedInstallDir>
   </PropertyGroup>
 
@@ -57,128 +57,128 @@
 
 		<!-- Linux -->
 		<When Condition="$([MSBuild]::IsOSPlatform('LINUX'))">
-			<PropertyGroup Condition="$(UnityInstallDir) == '' Or !exists('$(UnityInstallDir)')">
+			<PropertyGroup Condition="'$(UnityInstallDir)' == '' Or !exists('$(UnityInstallDir)')">
 				<UnityInstallDir>$(_HomeDir)/Unity/Hub/Editor/$(UnityVersion)</UnityInstallDir>
       </PropertyGroup>
 
 			<Choose>
 				<!-- Various steam install directories on linux (wtf why are there so many). -->
-				<When Condition="$(UnturnedBuild) == 'Client' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/.local/share/Steam/SteamApps/common/Unturned')">
+				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.local/share/Steam/SteamApps/common/Unturned')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/.local/share/Steam/SteamApps/common/Unturned</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/.local/share/Steam/SteamApps/common/U3DS')">
+				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.local/share/Steam/SteamApps/common/U3DS')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/.local/share/Steam/SteamApps/common/U3DS</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/Steam/SteamApps/common/Unturned')">
+				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Steam/SteamApps/common/Unturned')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/Steam/SteamApps/common/Unturned</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/Steam/SteamApps/common/U3DS')">
+				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Steam/SteamApps/common/U3DS')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/Steam/SteamApps/common/U3DS</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/.steam/SteamApps/common/Unturned')">
+				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/SteamApps/common/Unturned')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/.steam/SteamApps/common/Unturned</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/.steam/SteamApps/common/U3DS')">
+				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/SteamApps/common/U3DS')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/.steam/SteamApps/common/U3DS</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/.steam/Steam/SteamApps/common/Unturned')">
+				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/Steam/SteamApps/common/Unturned')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/.steam/Steam/SteamApps/common/Unturned</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/.steam/Steam/SteamApps/common/U3DS')">
+				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/Steam/SteamApps/common/U3DS')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/.steam/Steam/SteamApps/common/U3DS</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/SteamApps/common/Unturned')">
+				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/SteamApps/common/Unturned')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/SteamApps/common/Unturned</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/SteamApps/common/U3DS')">
+				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/SteamApps/common/U3DS')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/SteamApps/common/U3DS</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/snap/steam/SteamApps/common/Unturned')">
+				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/snap/steam/SteamApps/common/Unturned')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/snap/steam/SteamApps/common/Unturned</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/snap/steam/SteamApps/common/U3DS')">
+				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/snap/steam/SteamApps/common/U3DS')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/snap/steam/SteamApps/common/U3DS</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/.local/share/Steam/steamapps/common/Unturned')">
+				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.local/share/Steam/steamapps/common/Unturned')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/.local/share/Steam/steamapps/common/Unturned</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/.local/share/Steam/steamapps/common/U3DS')">
+				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.local/share/Steam/steamapps/common/U3DS')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/.local/share/Steam/steamapps/common/U3DS</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/Steam/steamapps/common/Unturned')">
+				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Steam/steamapps/common/Unturned')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/Steam/steamapps/common/Unturned</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/Steam/steamapps/common/U3DS')">
+				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Steam/steamapps/common/U3DS')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/Steam/steamapps/common/U3DS</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/.steam/steamapps/common/Unturned')">
+				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/steamapps/common/Unturned')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/.steam/steamapps/common/Unturned</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/.steam/steamapps/common/U3DS')">
+				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/steamapps/common/U3DS')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/.steam/steamapps/common/U3DS</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/.steam/Steam/steamapps/common/Unturned')">
+				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/Steam/steamapps/common/Unturned')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/.steam/Steam/steamapps/common/Unturned</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/.steam/Steam/steamapps/common/U3DS')">
+				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/Steam/steamapps/common/U3DS')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/.steam/Steam/steamapps/common/U3DS</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/steamapps/common/Unturned')">
+				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/steamapps/common/Unturned')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/steamapps/common/Unturned</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/steamapps/common/U3DS')">
+				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/steamapps/common/U3DS')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/steamapps/common/U3DS</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/snap/steam/steamapps/common/Unturned')">
+				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/snap/steam/steamapps/common/Unturned')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/snap/steam/steamapps/common/Unturned</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/snap/steam/steamapps/common/U3DS')">
+				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/snap/steam/steamapps/common/U3DS')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/snap/steam/steamapps/common/U3DS</UnturnedInstallDir>
 					</PropertyGroup>
@@ -186,9 +186,10 @@
 				<Otherwise/>
 			</Choose>
 
-			<PropertyGroup Condition="$(UnturnedInstallDir) != ''">
+			<PropertyGroup Condition="'$(UnturnedInstallDir)' != ''">
 
-				<_UnturnedDllPath>$(UnturnedInstallDir)/Unturned_Data/Managed</_UnturnedDllPath>
+				<_UnturnedDllPath Condition="exists('$(UnturnedInstallDir)/Unturned_Data/Managed')">$(UnturnedInstallDir)/Unturned_Data/Managed</_UnturnedDllPath>
+				<_UnturnedDllPath Condition="'$(_UnturnedDllPath)' == ''">$(UnturnedInstallDir)/Unturned_Headless_Data/Managed</_UnturnedDllPath>
 				<_RocketDllPath>$(UnturnedInstallDir)/Extras/Rocket.Unturned</_RocketDllPath>
 
 			</PropertyGroup>
@@ -197,28 +198,28 @@
 
 		<!-- OSX -->
 		<When Condition="$([MSBuild]::IsOSPlatform('OSX'))">
-			<PropertyGroup Condition="$(UnityInstallDir) == '' Or !exists('$(UnityInstallDir)')">
+			<PropertyGroup Condition="'$(UnityInstallDir)' == '' Or !exists('$(UnityInstallDir)')">
 				<UnityInstallDir>/Applications/Unity/Hub/Editor/$(UnityVersion)</UnityInstallDir>
 			</PropertyGroup>
 
 			<Choose>
 				<!-- Various steam install directories on mac. -->
-				<When Condition="$(UnturnedBuild) == 'Client' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/Library/Application Support/Steam/SteamApps/common/Unturned')">
+				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Library/Application Support/Steam/SteamApps/common/Unturned')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/Library/Application Support/Steam/SteamApps/common/Unturned</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/Library/Application Support/Steam/SteamApps/common/U3DS')">
+				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Library/Application Support/Steam/SteamApps/common/U3DS')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/Library/Application Support/Steam/SteamApps/common/U3DS</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/Library/Application Support/Steam/steamapps/common/Unturned')">
+				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Library/Application Support/Steam/steamapps/common/Unturned')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/Library/Application Support/Steam/steamapps/common/Unturned</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And $(UnturnedInstallDir) == '' And exists('$(_HomeDir)/Library/Application Support/Steam/steamapps/common/U3DS')">
+				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Library/Application Support/Steam/steamapps/common/U3DS')">
 					<PropertyGroup>
 						<UnturnedInstallDir>$(_HomeDir)/Library/Application Support/Steam/steamapps/common/U3DS</UnturnedInstallDir>
 					</PropertyGroup>
@@ -226,9 +227,9 @@
 				<Otherwise/>
 			</Choose>
 
-			<PropertyGroup Condition="$(UnturnedInstallDir) != ''">
+			<PropertyGroup Condition="'$(UnturnedInstallDir)' != ''">
 
-				<_UnturnedDllPath>$(UnturnedInstallDir)/Unturned_Data/Managed</_UnturnedDllPath>
+        <_UnturnedDllPath>$(UnturnedInstallDir)/Unturned.app/Contents/Resources/Data/Managed</_UnturnedDllPath>
 				<_RocketDllPath>$(UnturnedInstallDir)/Extras/Rocket.Unturned</_RocketDllPath>
 
 			</PropertyGroup>
@@ -238,23 +239,23 @@
 
 		<!-- Windows -->
 		<When Condition="$([MSBuild]::IsOSPlatform('WINDOWS'))">
-			<PropertyGroup Condition="$(UnityInstallDir) == '' Or !exists('$(UnityInstallDir)')">
+			<PropertyGroup Condition="'$(UnityInstallDir)' == '' Or !exists('$(UnityInstallDir)')">
 				<UnityInstallDir>C:\Program Files\Unity\Hub\Editor\$(UnityVersion)</UnityInstallDir>
 			</PropertyGroup>
 
 			<Choose>
 				<!-- Various steam install directories on windows. -->
-				<When Condition="$(UnturnedBuild) == 'Client' And $(UnturnedInstallDir) == '' And exists('C:\Program Files (x86)\Steam\steamapps\common\Unturned')">
+				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('C:\Program Files (x86)\Steam\steamapps\common\Unturned')">
 					<PropertyGroup>
 						<UnturnedInstallDir>C:\Program Files (x86)\Steam\steamapps\common\Unturned</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And $(UnturnedInstallDir) == '' And exists('C:\Program Files (x86)\Steam\steamapps\common\U3DS')">
+				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('C:\Program Files (x86)\Steam\steamapps\common\U3DS')">
 					<PropertyGroup>
 						<UnturnedInstallDir>C:\Program Files (x86)\Steam\steamapps\common\U3DS</UnturnedInstallDir>
 					</PropertyGroup>
 				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And $(UnturnedInstallDir) == '' And exists('C:\SteamCMD\steamapps\common\U3DS')">
+				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('C:\SteamCMD\steamapps\common\U3DS')">
 					<PropertyGroup>
 						<UnturnedInstallDir>C:\SteamCMD\steamapps\common\U3DS</UnturnedInstallDir>
 					</PropertyGroup>
@@ -262,9 +263,10 @@
 				<Otherwise/>
 			</Choose>
 
-			<PropertyGroup Condition="$(UnturnedInstallDir) != ''">
+			<PropertyGroup Condition="'$(UnturnedInstallDir)' != ''">
 
-				<_UnturnedDllPath>$(UnturnedInstallDir)\Unturned_Data\Managed</_UnturnedDllPath>
+        <_UnturnedDllPath Condition="exists('$(UnturnedInstallDir)\Unturned_Data\Managed')">$(UnturnedInstallDir)\Unturned_Data\Managed</_UnturnedDllPath>
+        <_UnturnedDllPath Condition="'$(_UnturnedDllPath)' == ''">$(UnturnedInstallDir)\Unturned_Headless_Data\Managed</_UnturnedDllPath>
 				<_RocketDllPath>$(UnturnedInstallDir)\Extras\Rocket.Unturned</_RocketDllPath>
 
 			</PropertyGroup>
@@ -282,7 +284,7 @@
 
 
 	<Choose>
-		<When Condition="$(_UnturnedDllPath) != ''">
+		<When Condition="'$(_UnturnedDllPath)' != ''">
 			<ItemGroup>
 				<Reference Include="@(UnturnedReference->'%(Identity)')" HintPath="$(_UnturnedDllPath)/%(Identity).dll" Private="$(CopyUnturnedReferencesToOutput)" />
 			</ItemGroup>
@@ -295,7 +297,7 @@
 	</Choose>
 
 	<Choose>
-		<When Condition="$(_RocketDllPath) != ''">
+		<When Condition="'$(_RocketDllPath)' != ''">
 			<ItemGroup>
 				<Reference Include="@(RocketReference->'%(Identity)')" HintPath="$(_RocketDllPath)/%(Identity).dll" Private="$(CopyUnturnedReferencesToOutput)" />
 			</ItemGroup>
@@ -367,7 +369,7 @@
 
 
   <!-- Remove files in unturned that arent included -->
-	<Target Name="_Unturned_MSBuild_Copy_RemvoeUnusedFiles" AfterTargets="_Unturned_MSBuild_Copy_Unturned" Condition="$(DeleteUnusedUnturnedReferences) And $(CopyUnturnedReferencesToProject) And exists('$(UnturnedReferencesCopyOutput)')">
+	<Target Name="_Unturned_MSBuild_Copy_RemoveUnusedFiles" AfterTargets="_Unturned_MSBuild_Copy_Unturned" Condition="$(DeleteUnusedUnturnedReferences) And $(CopyUnturnedReferencesToProject) And exists('$(UnturnedReferencesCopyOutput)')">
 		
 		<ItemGroup>
 			<__Files Include="$(UnturnedReferencesCopyOutput)/*"/>
@@ -378,7 +380,7 @@
 			<FilesToDelete Remove="@(FilesToDelete)" Condition="!exists('$(_UnturnedDllPath)/%(Identity)') And !exists('$(_RocketDllPath)/%(Identity)')" />
 		</ItemGroup>
 
-		<Message Text="Deleting: @(FilesToDelete)" Importance="high" Condition="@(FilesToDelete) != ''"/>
+		<Message Text="Deleting: @(FilesToDelete)" Importance="high" Condition="'@(FilesToDelete)' != ''"/>
 		<Delete Files="@(FilesToDelete->'$(UnturnedReferencesCopyOutput)/%(Identity)')" />
 
 	</Target>

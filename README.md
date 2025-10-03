@@ -77,6 +77,13 @@ The following items can be included in an `<ItemGroup>` to add references.
 | UnturnedReference | Adds a reference to an assembly in the `Unturned_Data/Managed` folder  |
 | RocketReference   | Adds a reference to an assembly in the `Extras/Rocket.Unturned` folder |
 
+# Errors
+
+The following error codes are added.
+
+| Code   | Description |
+| ------ | ----------- |
+| UNT003 | Emitted when referencing Newtonsoft.Json using `<UnturnedReference>` instead of `<PackageReference>`. |
 
 # Legal
 
