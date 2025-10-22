@@ -55,7 +55,7 @@ The following properties can be added to a `<PropertyGroup>` to modify this pack
 
 | Property                          | Default Value                             | Description                                                                                                    |
 | --------------------------------- | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| UnityVersion                      | 2021.3.29f1                               | The version of UnityEngine to pull documentation from.                                                         |
+| UnityVersion                      | 2022.3.62f2                               | The version of UnityEngine to pull documentation from.                                                         |
 | UnturnedBuild                     | Server                                    | Whether to reference U3DS: `Server`, or Unturned: `Client`.                                                    |
 | UnturnedReferencesCopyOutput      | `$(MSBuildStartupDirectory)/Libraries`    | When reference copying to project is enabled, the location where they're copied to.                            |
 | CopyUnturnedReferencesToOutput    | False                                     | If UnturnedReferences should be copied to the output directory.                                                |
