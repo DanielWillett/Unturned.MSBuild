@@ -3,10 +3,10 @@
 	<metadata>
 		<id>Unturned.MSBuild</id>
 		<title>Unturned MSBuild Content</title>
-		<version>1.0.0-test5</version>
+		<version>1.0.0-test6</version>
 		<authors>Daniel Willett</authors>
 		<description>A build-only package to add references for the Unturned, Unity, and RocketMod/LDM libraries.</description>
-		<repository type="git" url="https://github.com/DanielWillett/Unturned.MSBuild.git" branch="master" commit="2777a0557916964d99fcc0e62a830d79bbebafe3" />
+		<repository type="git" url="https://github.com/DanielWillett/Unturned.MSBuild.git" branch="master" commit="7116c93d5c6aba7c3c09af5ed451d6f61b9c6427" />
     <projectUrl>https://github.com/DanielWillett/Unturned.MSBuild</projectUrl>
     <license type="file">files/License.md</license>
 		<readme>files/Readme.md</readme>

@@ -1,5 +1,7 @@
 A build-only package to add references for the Unturned, Unity, and RocketMod/LDM libraries.
 
+Available to install from NuGet: [Unturned.MSBuild](https://www.nuget.org/packages/Unturned.MSBuild).
+
 # Features
 * Easily reference Unturned and LDM (RocketMod) libraries.
 * Optionally copy them to your project directory allowing someone to work on the project without Unturned installed, and keep them updated simply by building the project while having Unturned installed.
