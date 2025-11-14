@@ -5,15 +5,19 @@ Available to install from NuGet: [Unturned.MSBuild](https://www.nuget.org/packag
 # Features
 * Easily reference Unturned and LDM (RocketMod) libraries.
 * Optionally copy them to your project directory allowing someone to work on the project without Unturned installed, and keep them updated simply by building the project while having Unturned installed.
+  * This is also useful for automated CI/CD build tools.
 * Copies documentation from Unity installation if found.
 * Adds default global usings to improve development experience.
 * Adds #define constants for the current version of Unity.
-* Installs `Microsoft.Build.CopyOnWrite` to add CoW support to MSBuild for file systems that support it.
+* Enables `Microsoft.Build.CopyOnWrite` to add CoW support to MSBuild for file systems that support it.
 * Directly references the game using the `<Reference>` item, doesn't actually contain the Unturned assemblies.
+* Compatible with Publicizer.
+* Automatically references the latest installed version of the game without having to update the package.
+  * Certain updates like UnityEngine a version change may require a package update.
 
 # Usage
+This package is installed using the csproj file which needs to use the new .NET SDK format. If your project was created for .NET Framework and uses the old csproj format, you can upgrade to the new format using [this tool](https://github.com/hvanbakel/CsprojToVs2017/tree/master?tab=readme-ov-file#quick-start).
 ```xml
-
 <ItemGroup>
 
     <!-- Add a reference to this package -->
@@ -47,7 +51,23 @@ Available to install from NuGet: [Unturned.MSBuild](https://www.nuget.org/packag
     <DeleteUnusedUnturnedReferences>True</DeleteUnusedUnturnedReferences>
 
 </PropertyGroup>
+```
 
+## Use Directory.Build.props
+
+The [Directory.Build.props](https://learn.microsoft.com/en-us/visualstudio/msbuild/customize-by-directory?view=visualstudio#directorybuildprops-and-directorybuildtargets) file can be added to a folder higher up the hierarchy than your project to apply to all projects in sub-folders. This is a good way to configure custom locations for the Unity or Unturned installation properties without committing them to your project.
+
+### Example
+Adding the following file will configure all projects within the 'repos' folder to reference documentation from Unity version **2021.3.29f1** and look for Unturned at **C:\Dev\SteamCMD**.
+
+`C:\Users\<name>\source\repos\Directory.Build.props`
+```xml
+<Project>
+    <PropertyGroup>
+        <UnityVersion>2021.3.29f1</UnityVersion>
+        <UnturnedInstallDir>C:\Dev\SteamCMD</UnturnedInstallDir>
+    </PropertyGroup>
+</Project>
 ```
 
 # Properties
@@ -55,7 +75,7 @@ The following properties can be added to a `<PropertyGroup>` to modify this pack
 
 | Property                          | Default Value                             | Description                                                                                                    |
 | --------------------------------- | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| UnityVersion                      | 2022.3.62f2                               | The version of UnityEngine to pull documentation from.                                                         |
+| UnityVersion                      | 2022.3.62f3                               | The version of UnityEngine to pull documentation from.                                                         |
 | UnturnedBuild                     | Server                                    | Whether to reference U3DS: `Server`, or Unturned: `Client`.                                                    |
 | UnturnedReferencesCopyOutput      | `$(MSBuildStartupDirectory)/Libraries`    | When reference copying to project is enabled, the location where they're copied to.                            |
 | CopyUnturnedReferencesToOutput    | False                                     | If UnturnedReferences should be copied to the output directory.                                                |

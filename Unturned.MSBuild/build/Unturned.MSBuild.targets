@@ -1,545 +1,545 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project InitialTargets="_Unturned_MSBuild_Replace_Newtonsoft_Json_With_Package;_Unturned_MSBuild_CheckLibsExists_Unturned_Src;_Unturned_MSBuild_CheckLibsExists_Unturned_Lib;_Unturned_MSBuild_CheckLibsExists_Rocket_Src;_Unturned_MSBuild_CheckLibsExists_Rocket_Lib;_Unturned_MSBuild_AddUsingsForAssemblyCSharp;_Unturned_MSBuild_AddUsingsForSDGNetTransport;_Unturned_MSBuild_AddUsingsForUnityEngine;_Unturned_MSBuild_AddUsingsForSteamworks;_Unturned_MSBuild_AddUsingsForLogging;_Unturned_MSBuild_AddUsingsForUniTask;_Unturned_MSBuild_AddUsingsForRocket">
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Build.CopyOnWrite" Version="1.0.334" PrivateAssets="all" />
-	</ItemGroup>
-
-	<PropertyGroup>
-
-		<UnityVersion Condition="'$(UnityVersion)' == ''">2022.3.62f2</UnityVersion>
-
-		<AppendRuntimeIdentifierToOutputPath Condition="'$(AppendRuntimeIdentifierToOutputPath)' == '' And '$(TargetFrameworks)' == ''">False</AppendRuntimeIdentifierToOutputPath>
-		<AppendTargetFrameworkToOutputPath Condition="'$(AppendTargetFrameworkToOutputPath)' == '' And '$(TargetFrameworks)' == ''">False</AppendTargetFrameworkToOutputPath>
-
-		<UnturnedBuild Condition="$(UnturnedBuild) != 'Client'">Server</UnturnedBuild>
-
-		<CopyUnturnedReferencesToOutput Condition="'$(CopyUnturnedReferencesToOutput)' == ''">False</CopyUnturnedReferencesToOutput>
-		<CopyUnturnedReferencesToProject Condition="'$(CopyUnturnedReferencesToProject)' == ''">False</CopyUnturnedReferencesToProject>
-		<DeleteUnusedUnturnedReferences Condition="'$(DeleteUnusedUnturnedReferences)' == ''">False</DeleteUnusedUnturnedReferences>
-		<AddUnturnedGlobalUsings Condition="'$(AddUnturnedGlobalUsings)' != 'False'">True</AddUnturnedGlobalUsings>
-		<UnturnedReferenceDebugLog Condition="'$(UnturnedReferenceDebugLog)' == ''">False</UnturnedReferenceDebugLog>
-
-		<!-- Unity v2022.3.62f2 LTS Defines  -->
-		<DefineConstants>$(DefineConstants);UNITY_2022_3_62;UNITY_2022_3;UNITY_2022;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER</DefineConstants>
-		<DefineConstants>$(DefineConstants);UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER</DefineConstants>
-		<DefineConstants>$(DefineConstants);UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER</DefineConstants>
-		<DefineConstants>$(DefineConstants);UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2022_1_OR_NEWER</DefineConstants>
-		<DefineConstants>$(DefineConstants);UNITY_2022_2_OR_NEWER;UNITY_2022_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING</DefineConstants>
-		<DefineConstants>$(DefineConstants);ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING</DefineConstants>
-		<DefineConstants>$(DefineConstants);ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS</DefineConstants>
-		<DefineConstants>$(DefineConstants);ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS</DefineConstants>
-		<DefineConstants>$(DefineConstants);ENABLE_CLOUD_SERVICES_BUILD;ENABLE_EDITOR_GAME_SERVICES;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE</DefineConstants>
-		<DefineConstants>$(DefineConstants);ENABLE_WEBSOCKET_CLIENT;ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS</DefineConstants>
-		<DefineConstants>$(DefineConstants);ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI</DefineConstants>
-		<DefineConstants>$(DefineConstants);ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING</DefineConstants>
-		<DefineConstants>$(DefineConstants);ENABLE_NAVIGATION_PACKAGE_DEBUG_VISUALIZATION;ENABLE_NAVIGATION_HEIGHTMESH_RUNTIME_SUPPORT;ENABLE_NAVIGATION_UI_REQUIRES_PACKAGE</DefineConstants>
-		<DefineConstants>$(DefineConstants);PLATFORM_STANDALONE;TEXTCORE_1_0_OR_NEWER;UNITY_STANDALONE;ENABLE_RUNTIME_GI</DefineConstants>
-		<DefineConstants>$(DefineConstants);ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_NVIDIA;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC</DefineConstants>
-		<DefineConstants>$(DefineConstants);ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;PLATFORM_INITIALIZES_MEMORY_MANAGER_EXPLICITLY</DefineConstants>
-		<DefineConstants>$(DefineConstants);ENABLE_MONO;NET_4_6;NET_UNITY_4_8;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;ENABLE_UNITY_COLLECTIONS_CHECKS</DefineConstants>
-		<DefineConstants>$(DefineConstants);ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP</DefineConstants>
-
-	</PropertyGroup>
-
-	<PropertyGroup>
-		<UnturnedReferencesCopyOutput Condition="'$(UnturnedReferencesCopyOutput)' == ''">$(MSBuildStartupDirectory)/Libraries</UnturnedReferencesCopyOutput>
-    <_HomeDir>$([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))</_HomeDir>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(U3DSInstallDir)' != '' And '$(UnturnedBuild)' == 'Server' And exists('$(U3DSInstallDir)')">
-		<UnturnedInstallDir>$(U3DSInstallDir)</UnturnedInstallDir>
-	</PropertyGroup>
-
-  <PropertyGroup Condition="'$(UnturnedInstallDir)' != '' And !exists('$(UnturnedInstallDir)')">
-    <UnturnedInstallDir></UnturnedInstallDir>
-  </PropertyGroup>
-
-	<Choose>
-
-		<!-- Linux -->
-		<When Condition="$([MSBuild]::IsOSPlatform('LINUX'))">
-			<PropertyGroup Condition="'$(UnityInstallDir)' == '' Or !exists('$(UnityInstallDir)')">
-				<UnityInstallDir>$(_HomeDir)/Unity/Hub/Editor/$(UnityVersion)</UnityInstallDir>
-      </PropertyGroup>
-
-			<Choose>
-				<!-- Various steam install directories on linux (wtf why are there so many). -->
-				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.local/share/Steam/SteamApps/common/Unturned')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/.local/share/Steam/SteamApps/common/Unturned</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.local/share/Steam/SteamApps/common/U3DS')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/.local/share/Steam/SteamApps/common/U3DS</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Steam/SteamApps/common/Unturned')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/Steam/SteamApps/common/Unturned</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Steam/SteamApps/common/U3DS')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/Steam/SteamApps/common/U3DS</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/SteamApps/common/Unturned')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/.steam/SteamApps/common/Unturned</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/SteamApps/common/U3DS')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/.steam/SteamApps/common/U3DS</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/Steam/SteamApps/common/Unturned')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/.steam/Steam/SteamApps/common/Unturned</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/Steam/SteamApps/common/U3DS')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/.steam/Steam/SteamApps/common/U3DS</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/SteamApps/common/Unturned')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/SteamApps/common/Unturned</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/SteamApps/common/U3DS')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/SteamApps/common/U3DS</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/snap/steam/SteamApps/common/Unturned')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/snap/steam/SteamApps/common/Unturned</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/snap/steam/SteamApps/common/U3DS')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/snap/steam/SteamApps/common/U3DS</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.local/share/Steam/steamapps/common/Unturned')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/.local/share/Steam/steamapps/common/Unturned</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.local/share/Steam/steamapps/common/U3DS')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/.local/share/Steam/steamapps/common/U3DS</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Steam/steamapps/common/Unturned')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/Steam/steamapps/common/Unturned</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Steam/steamapps/common/U3DS')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/Steam/steamapps/common/U3DS</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/steamapps/common/Unturned')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/.steam/steamapps/common/Unturned</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/steamapps/common/U3DS')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/.steam/steamapps/common/U3DS</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/Steam/steamapps/common/Unturned')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/.steam/Steam/steamapps/common/Unturned</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/Steam/steamapps/common/U3DS')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/.steam/Steam/steamapps/common/U3DS</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/steamapps/common/Unturned')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/steamapps/common/Unturned</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/steamapps/common/U3DS')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/steamapps/common/U3DS</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/snap/steam/steamapps/common/Unturned')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/snap/steam/steamapps/common/Unturned</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/snap/steam/steamapps/common/U3DS')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/snap/steam/steamapps/common/U3DS</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<Otherwise/>
-			</Choose>
-
-			<PropertyGroup Condition="'$(UnturnedInstallDir)' != ''">
-
-				<_UnturnedDllPath Condition="exists('$(UnturnedInstallDir)/Unturned_Data/Managed')">$(UnturnedInstallDir)/Unturned_Data/Managed</_UnturnedDllPath>
-				<_UnturnedDllPath Condition="'$(_UnturnedDllPath)' == ''">$(UnturnedInstallDir)/Unturned_Headless_Data/Managed</_UnturnedDllPath>
-				<_RocketDllPath>$(UnturnedInstallDir)/Extras/Rocket.Unturned</_RocketDllPath>
-
-			</PropertyGroup>
-
-		</When>
-
-		<!-- OSX -->
-		<When Condition="$([MSBuild]::IsOSPlatform('OSX'))">
-			<PropertyGroup Condition="'$(UnityInstallDir)' == '' Or !exists('$(UnityInstallDir)')">
-				<UnityInstallDir>/Applications/Unity/Hub/Editor/$(UnityVersion)</UnityInstallDir>
-			</PropertyGroup>
-
-			<Choose>
-				<!-- Various steam install directories on mac. -->
-				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Library/Application Support/Steam/SteamApps/common/Unturned')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/Library/Application Support/Steam/SteamApps/common/Unturned</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Library/Application Support/Steam/SteamApps/common/U3DS')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/Library/Application Support/Steam/SteamApps/common/U3DS</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Library/Application Support/Steam/steamapps/common/Unturned')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/Library/Application Support/Steam/steamapps/common/Unturned</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Library/Application Support/Steam/steamapps/common/U3DS')">
-					<PropertyGroup>
-						<UnturnedInstallDir>$(_HomeDir)/Library/Application Support/Steam/steamapps/common/U3DS</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<Otherwise/>
-			</Choose>
-
-			<PropertyGroup Condition="'$(UnturnedInstallDir)' != ''">
-
-        <_UnturnedDllPath>$(UnturnedInstallDir)/Unturned.app/Contents/Resources/Data/Managed</_UnturnedDllPath>
-				<_RocketDllPath>$(UnturnedInstallDir)/Extras/Rocket.Unturned</_RocketDllPath>
-
-			</PropertyGroup>
-
-
-		</When>
-
-		<!-- Windows -->
-		<When Condition="$([MSBuild]::IsOSPlatform('WINDOWS'))">
-			<PropertyGroup Condition="'$(UnityInstallDir)' == '' Or !exists('$(UnityInstallDir)')">
-				<UnityInstallDir>C:\Program Files\Unity\Hub\Editor\$(UnityVersion)</UnityInstallDir>
-			</PropertyGroup>
-
-			<Choose>
-				<!-- Various steam install directories on windows. -->
-				<When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('C:\Program Files (x86)\Steam\steamapps\common\Unturned')">
-					<PropertyGroup>
-						<UnturnedInstallDir>C:\Program Files (x86)\Steam\steamapps\common\Unturned</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('C:\Program Files (x86)\Steam\steamapps\common\U3DS')">
-					<PropertyGroup>
-						<UnturnedInstallDir>C:\Program Files (x86)\Steam\steamapps\common\U3DS</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('C:\SteamCMD\steamapps\common\U3DS')">
-					<PropertyGroup>
-						<UnturnedInstallDir>C:\SteamCMD\steamapps\common\U3DS</UnturnedInstallDir>
-					</PropertyGroup>
-				</When>
-				<Otherwise/>
-			</Choose>
-
-			<PropertyGroup Condition="'$(UnturnedInstallDir)' != ''">
-
-        <_UnturnedDllPath Condition="exists('$(UnturnedInstallDir)\Unturned_Data\Managed')">$(UnturnedInstallDir)\Unturned_Data\Managed</_UnturnedDllPath>
-        <_UnturnedDllPath Condition="'$(_UnturnedDllPath)' == ''">$(UnturnedInstallDir)\Unturned_Headless_Data\Managed</_UnturnedDllPath>
-				<_RocketDllPath>$(UnturnedInstallDir)\Extras\Rocket.Unturned</_RocketDllPath>
-
-			</PropertyGroup>
-
-		</When>
-		<Otherwise/>
-	</Choose>
-
-	<PropertyGroup>
-
-		<_UnturnedDllPath Condition="!exists('$(_UnturnedDllPath)')"></_UnturnedDllPath>
-		<_RocketDllPath Condition="!exists('$(_RocketDllPath)')"></_RocketDllPath>
-
-	</PropertyGroup>
-
-
-	<Choose>
-		<When Condition="'$(_UnturnedDllPath)' != ''">
-			<ItemGroup>
-				<Reference Include="@(UnturnedReference->'%(Identity)')" HintPath="$(_UnturnedDllPath)/%(Identity).dll" Private="$(CopyUnturnedReferencesToOutput)" />
-			</ItemGroup>
-		</When>
-		<Otherwise>
-			<ItemGroup>
-				<Reference Include="@(UnturnedReference->'%(Identity)')" HintPath="$(UnturnedReferencesCopyOutput)/%(Identity).dll" Private="$(CopyUnturnedReferencesToOutput)" />
-			</ItemGroup>
-		</Otherwise>
-	</Choose>
-
-	<Choose>
-		<When Condition="'$(_RocketDllPath)' != ''">
-			<ItemGroup>
-				<Reference Include="@(RocketReference->'%(Identity)')" HintPath="$(_RocketDllPath)/%(Identity).dll" Private="$(CopyUnturnedReferencesToOutput)" />
-			</ItemGroup>
-		</When>
-		<Otherwise>
-			<ItemGroup>
-				<Reference Include="@(RocketReference->'%(Identity)')" HintPath="$(UnturnedReferencesCopyOutput)/%(Identity).dll" Private="$(CopyUnturnedReferencesToOutput)" />
-			</ItemGroup>
-		</Otherwise>
-	</Choose>
-
-	<Target AfterTargets="AfterBuild" Name="_Unturned_MSBuild_PrintInstallDirs" Condition="$(UnturnedReferenceDebugLog)" >
-
-		<Message Text="Looking for Unity installation at: &quot;$(UnityInstallDir)&quot;" Importance="High"/>
-		<Message Text="Found Unturned installation at: &quot;$(UnturnedInstallDir)&quot;" Importance="High"/>
-		<Message Text="Copying: $(CopyUnturnedReferencesToProject)" Importance="High"/>
-
-	</Target>
-
-	<!-- Check that references exist -->
-	<Target BeforeTargets="Build" Name="_Unturned_MSBuild_CheckLibsExists_Unturned_Src" Condition="'$(_UnturnedDllPath)' != '' And '@(UnturnedReference)' != ''">
-		<Error Condition="!exists('$(_UnturnedDllPath)/%(UnturnedReference.Identity).dll')"
-		       Text="Reference not found: '$(_UnturnedDllPath)/%(UnturnedReference.Identity).dll'"
-		       ContinueOnError="true"
-		       Code="UNT001"/>
-	</Target>
-	<Target BeforeTargets="Build" Name="_Unturned_MSBuild_CheckLibsExists_Unturned_Lib" Condition="'$(_UnturnedDllPath)' == '' And '@(UnturnedReference)' != ''">
-		<Error Condition="!exists('$(UnturnedReferencesCopyOutput)/%(UnturnedReference.Identity).dll')"
-		       Text="Reference not found: '$(UnturnedReferencesCopyOutput)/%(UnturnedReference.Identity).dll'"
-		       ContinueOnError="true"
-		       Code="UNT001"/>
-	</Target>
-	<Target BeforeTargets="Build" Name="_Unturned_MSBuild_CheckLibsExists_Rocket_Src" Condition="'$(_RocketDllPath)' != '' And '@(RocketReference)' != ''">
-		<Error Condition="!exists('$(_RocketDllPath)/%(RocketReference.Identity).dll')"
-		       Text="Reference not found: '$(_RocketDllPath)/%(RocketReference.Identity).dll'"
-		       ContinueOnError="true"
-		       Code="UNT002"/>
-	</Target>
-	<Target BeforeTargets="Build" Name="_Unturned_MSBuild_CheckLibsExists_Rocket_Lib" Condition="'$(_RocketDllPath)' == '' And '@(RocketReference)' != ''">
-		<Error Condition="!exists('$(UnturnedReferencesCopyOutput)/%(RocketReference.Identity).dll')"
-		       Text="Reference not found: '$(UnturnedReferencesCopyOutput)/%(RocketReference.Identity).dll'"
-		       ContinueOnError="true"
-		       Code="UNT002"/>
-	</Target>
-
-	<!-- Copy unturned files from U3DS to ~/Libraries -->
-	<Target Name="_Unturned_MSBuild_Copy_Unturned" AfterTargets="AfterBuild" Condition="$(CopyUnturnedReferencesToProject) And exists('$(_UnturnedDllPath)') And '@(UnturnedReference)' != ''">
-		<Message Text="Copying Unturned Libraries to: &quot;$(UnturnedReferencesCopyOutput)&quot;" Importance="High" Condition="$(UnturnedReferenceDebugLog)"/>
-		<Copy SourceFiles="$(_UnturnedDllPath)/%(UnturnedReference.Identity).dll"
-		      DestinationFolder="$(UnturnedReferencesCopyOutput)"
-		      SkipUnchangedFiles="True" />
-		<Copy SourceFiles="$(_UnturnedDllPath)/%(UnturnedReference.Identity).xml"
-					Condition="exists('$(_UnturnedDllPath)/%(UnturnedReference.Identity).xml')"
-		      DestinationFolder="$(UnturnedReferencesCopyOutput)"
-					ContinueOnError="true"
-					SkipUnchangedFiles="True" />
-	</Target>
-
-	<Target Name="_Unturned_MSBuild_Replace_Newtonsoft_Json_With_Package">
-
-    <!-- Check if referencing Newtonsoft.Json and urge to use package instead. -->
-    <Error Condition="'@(UnturnedReference->'%(Identity)')' == 'Newtonsoft.Json'"
-           Code="UNT003"
-           Text="Add a PackageReference to %(Identity) instead of using an UnturnedReference. Unturned uses v13.0.3. Click the error code to open NuGet."
-           File="$(MSBuildProjectFile)"
-           HelpLink="https://www.nuget.org/packages/Newtonsoft.Json/13.0.3"/>
-
-  </Target>
-
-
-  <!-- Remove files in unturned that arent included -->
-	<Target Name="_Unturned_MSBuild_Copy_RemoveUnusedFiles" AfterTargets="_Unturned_MSBuild_Copy_Unturned" Condition="$(DeleteUnusedUnturnedReferences) And $(CopyUnturnedReferencesToProject) And exists('$(UnturnedReferencesCopyOutput)')">
-		
-		<ItemGroup>
-			<__Files Include="$(UnturnedReferencesCopyOutput)/*"/>
-			<FilesToDelete Include="@(__Files->'%(Filename)%(Extension)')"/>
-			<FilesToDelete Remove="@(UnturnedReference->'%(Identity).dll')" />
-			<FilesToDelete Remove="@(UnturnedReference->'%(Identity).xml')" />
-			<FilesToDelete Remove="@(RocketReference->'%(Identity).dll')" />
-			<FilesToDelete Remove="@(FilesToDelete)" Condition="!exists('$(_UnturnedDllPath)/%(Identity)') And !exists('$(_RocketDllPath)/%(Identity)')" />
-		</ItemGroup>
-
-		<Message Text="Deleting: @(FilesToDelete)" Importance="high" Condition="'@(FilesToDelete)' != ''"/>
-		<Delete Files="@(FilesToDelete->'$(UnturnedReferencesCopyOutput)/%(Identity)')" />
-
-	</Target>
-
-	<!-- Copy Rocket files from U3DS to ~/Libraries -->
-	<Target Name="_Unturned_MSBuild_Copy_Rocket" AfterTargets="AfterBuild" Condition="$(CopyUnturnedReferencesToProject) And exists('$(_RocketDllPath)') And '@(RocketReference)' != ''">
-		<Message Text="Copying Rocket Libraries to: &quot;$(UnturnedReferencesCopyOutput)&quot;" Importance="High" Condition="$(UnturnedReferenceDebugLog)"/>
-		<Copy SourceFiles="$(_RocketDllPath)/%(RocketReference.Identity).dll"
-		      DestinationFolder="$(UnturnedReferencesCopyOutput)"
-		      SkipUnchangedFiles="True" />
-	</Target>
-
-	<!-- Copy xml docs for unity files to U3DS -->
-	<Target Name="_Unturned_MSBuild_Copy_Unity2Unturned" AfterTargets="AfterBuild" Condition="exists('$(UnityInstallDir)/Editor/Data/Managed/UnityEngine') And exists('$(_UnturnedDllPath)') And '@(UnturnedReference)' != ''">
-		<Message Text="Copying Unity documentation from &quot;$(UnityInstallDir)&quot; to: &quot;$(_UnturnedDllPath)&quot;" Importance="High" Condition="$(UnturnedReferenceDebugLog)"/>
-		<Copy SourceFiles="$(UnityInstallDir)/Editor/Data/Managed/UnityEngine/%(UnturnedReference.Identity).xml"
-		      Condition="exists('$(UnityInstallDir)/Editor/Data/Managed/UnityEngine/%(UnturnedReference.Identity).xml')"
-		      DestinationFolder="$(_UnturnedDllPath)"
-		      SkipUnchangedFiles="True" />
-	</Target>
-
-	<!-- Copy xml docs for unity files to ~/Libraries -->
-	<Target Name="_Unturned_MSBuild_Copy_Unity2Libraries" AfterTargets="AfterBuild" Condition="$(CopyUnturnedReferencesToProject) And exists('$(UnityInstallDir)/Editor/Data/Managed/UnityEngine') And '@(UnturnedReference)' != ''">
-		<Message Text="Copying Unity documentation from &quot;$(UnityInstallDir)&quot; to: &quot;$(UnturnedReferencesCopyOutput)&quot;" Importance="High" Condition="$(UnturnedReferenceDebugLog)"/>
-		<Copy SourceFiles="$(UnityInstallDir)/Editor/Data/Managed/UnityEngine/%(UnturnedReference.Identity).xml"
-		      Condition="exists('$(UnityInstallDir)/Editor/Data/Managed/UnityEngine/%(UnturnedReference.Identity).xml')"
-		      DestinationFolder="$(UnturnedReferencesCopyOutput)"
-		      SkipUnchangedFiles="True" />
-	</Target>
-
-  <ItemGroup Condition="$(AddUnturnedGlobalUsings)">
-    <Using Remove="System.Net.Http" />
-    <Using Include="System.Collections" />
-    <Using Include="System.Collections.Generic" />
-    <Using Include="System.Threading" />
-    <Using Include="System.Threading.Tasks" />
-    <Using Include="System.Diagnostics.Contracts" />
-    <Using Include="System.Diagnostics.Contracts.PureAttribute">
-      <Alias>PureAttribute</Alias>
-    </Using>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1' And $(AddUnturnedGlobalUsings)">
-    <Using Include="System.Diagnostics.CodeAnalysis" />
-  </ItemGroup>
-
-  <!-- Conditional usings depending on which libs are available -->
-	<Target Name="_Unturned_MSBuild_AddUsingsForAssemblyCSharp" BeforeTargets="BeforeBuild" Condition="$(AddUnturnedGlobalUsings)">
-		<ItemGroup>
-			<__FilteredReferences Remove="@(__FilteredReferences)"/>
-			<__FilteredReferences Include="@(Reference)" Condition="'%(Identity)' == 'Assembly-CSharp'" />
-		</ItemGroup>
-
-		<ItemGroup Condition="'@(__FilteredReferences)' != ''">
-			<Using Include="SDG.Unturned" />
-			<Using Include="System.Version">
-				<Alias>Version</Alias>
-			</Using>
-			<Using Include="System.Action">
-				<Alias>Action</Alias>
-			</Using>
-		</ItemGroup>
-	</Target>
-	<Target Name="_Unturned_MSBuild_AddUsingsForSDGNetTransport" BeforeTargets="BeforeBuild" Condition="$(AddUnturnedGlobalUsings)">
-		<ItemGroup>
-			<__FilteredReferences Remove="@(__FilteredReferences)"/>
-			<__FilteredReferences Include="@(Reference)" Condition="'%(Identity)' == 'SDG.NetTransport'" />
-		</ItemGroup>
-
-		<ItemGroup Condition="'@(__FilteredReferences)' != ''">
-			<Using Include="SDG.NetTransport" />
-		</ItemGroup>
-	</Target>
-
-	<Target Name="_Unturned_MSBuild_AddUsingsForUnityEngine" BeforeTargets="BeforeBuild" Condition="$(AddUnturnedGlobalUsings)">
-		<ItemGroup>
-			<__FilteredReferences Remove="@(__FilteredReferences)"/>
-			<__FilteredReferences Include="@(Reference)" Condition="'%(Identity)' == 'UnityEngine.CoreModule'" />
-		</ItemGroup>
-
-		<ItemGroup Condition="'@(__FilteredReferences)' != ''">
-			<Using Include="UnityEngine" />
-			<Using Include="UnityEngine.Object" >
-				<Alias>Object</Alias>
-			</Using>
-		</ItemGroup>
-	</Target>
-
-	<Target Name="_Unturned_MSBuild_AddUsingsForSteamworks" BeforeTargets="BeforeBuild" Condition="$(AddUnturnedGlobalUsings)">
-		<ItemGroup>
-			<__FilteredReferences Remove="@(__FilteredReferences)"/>
-			<__FilteredReferences Include="@(Reference)" Condition="'%(Identity)' == 'com.rlabrecque.steamworks.net'" />
-		</ItemGroup>
-
-		<ItemGroup Condition="'@(__FilteredReferences)' != ''">
-			<Using Include="Steamworks" />
-		</ItemGroup>
-	</Target>
-
-	<Target Name="_Unturned_MSBuild_AddUsingsForLogging" BeforeTargets="BeforeBuild" Condition="$(AddUnturnedGlobalUsings)">
-		<ItemGroup>
-			<__FilteredPackageReferences Remove="@(__FilteredPackageReferences)"/>
-			<__FilteredPackageReferences Include="@(PackageReference)" Condition="'%(Identity)' == 'Microsoft.Extensions.Logging.Abstractions' Or '%(Identity)' == 'Microsoft.Extensions.Logging'" />
-		</ItemGroup>
-
-		<ItemGroup Condition="'@(__FilteredPackageReferences)' != ''">
-			<Using Include="Microsoft.Extensions.Logging" />
-			<Using Include="Microsoft.Extensions.Logging.ILogger">
-				<Alias>ILogger</Alias>
-			</Using>
-		</ItemGroup>
-	</Target>
-
-	<Target Name="_Unturned_MSBuild_AddUsingsForUniTask" BeforeTargets="BeforeBuild" Condition="$(AddUnturnedGlobalUsings)">
-		<ItemGroup>
-			<__FilteredReferences Remove="@(__FilteredReferences)"/>
-			<__FilteredPackageReferences Remove="@(__FilteredPackageReferences)"/>
-			<__FilteredPackageReferences Include="@(PackageReference)" Condition="'%(Identity)' == 'UniTask' Or '%(Identity)' == 'OpenMod.UniTask'" />
-			<__FilteredReferences Include="@(Reference)" Condition="'%(Identity)' == 'UniTask'" />
-		</ItemGroup>
-
-		<ItemGroup Condition="'@(__FilteredPackageReferences)' != '' Or '@(__FilteredReferences)' != '' ">
-			<Using Include="Cysharp.Threading.Tasks" />
-		</ItemGroup>
-	</Target>
-
-  <Target Name="_Unturned_MSBuild_AddUsingsForRocket" BeforeTargets="BeforeBuild" Condition="$(AddUnturnedGlobalUsings)">
-		<ItemGroup>
-			<__FilteredReferences Remove="@(__FilteredReferences)"/>
-			<__FilteredReferences Include="@(Reference)" Condition="'%(Identity)' == 'Rocket.Unturned' Or '%(Identity)' == 'Rocket.API' Or '%(Identity)' == 'Rocket.Core'" />
-		</ItemGroup>
-
-		<ItemGroup Condition="'@(__FilteredReferences)' != ''">
-			<Using Include="Rocket.API" />
-			<Using Include="Rocket.API.Extensions" />
-			<Using Include="Rocket.Core" />
-			<Using Include="Rocket.Core.Commands" />
-			<Using Include="Rocket.Core.Extensions" />
-			<Using Include="Rocket.Core.Logging" />
-			<Using Include="Rocket.Core.Logging.Logger" >
-				<Alias>Logger</Alias>
-			</Using>
-			<Using Include="Rocket.Core.Permissions" />
-			<Using Include="Rocket.Core.Plugins" />
-			<Using Include="Rocket.Core.Steam" />
-			<Using Include="Rocket.Unturned" />
-			<Using Include="Rocket.Unturned.Chat" />
-			<Using Include="Rocket.Unturned.Effects" />
-			<Using Include="Rocket.Unturned.Enumerations" />
-			<Using Include="Rocket.Unturned.Events" />
-			<Using Include="Rocket.Unturned.Extensions" />
-			<Using Include="Rocket.Unturned.Items" />
-			<Using Include="Rocket.Unturned.Permissions" />
-			<Using Include="Rocket.Unturned.Player" />
-			<Using Include="Rocket.Unturned.Plugins" />
-			<Using Include="Rocket.Unturned.Skills" />
-		</ItemGroup>
-	</Target>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Build.CopyOnWrite" Version="1.0.334" PrivateAssets="all" />
+    </ItemGroup>
+
+    <PropertyGroup>
+
+        <UnityVersion Condition="'$(UnityVersion)' == ''">2022.3.62f3</UnityVersion>
+
+        <AppendRuntimeIdentifierToOutputPath Condition="'$(AppendRuntimeIdentifierToOutputPath)' == '' And '$(TargetFrameworks)' == ''">False</AppendRuntimeIdentifierToOutputPath>
+        <AppendTargetFrameworkToOutputPath Condition="'$(AppendTargetFrameworkToOutputPath)' == '' And '$(TargetFrameworks)' == ''">False</AppendTargetFrameworkToOutputPath>
+
+        <UnturnedBuild Condition="$(UnturnedBuild) != 'Client'">Server</UnturnedBuild>
+
+        <CopyUnturnedReferencesToOutput Condition="'$(CopyUnturnedReferencesToOutput)' == ''">False</CopyUnturnedReferencesToOutput>
+        <CopyUnturnedReferencesToProject Condition="'$(CopyUnturnedReferencesToProject)' == ''">False</CopyUnturnedReferencesToProject>
+        <DeleteUnusedUnturnedReferences Condition="'$(DeleteUnusedUnturnedReferences)' == ''">False</DeleteUnusedUnturnedReferences>
+        <AddUnturnedGlobalUsings Condition="'$(AddUnturnedGlobalUsings)' != 'False'">True</AddUnturnedGlobalUsings>
+        <UnturnedReferenceDebugLog Condition="'$(UnturnedReferenceDebugLog)' == ''">False</UnturnedReferenceDebugLog>
+
+        <!-- Unity v2022.3.62f3 LTS Defines  -->
+        <DefineConstants>$(DefineConstants);UNITY_2022_3_62;UNITY_2022_3;UNITY_2022;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER</DefineConstants>
+        <DefineConstants>$(DefineConstants);UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER</DefineConstants>
+        <DefineConstants>$(DefineConstants);UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER</DefineConstants>
+        <DefineConstants>$(DefineConstants);UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2022_1_OR_NEWER</DefineConstants>
+        <DefineConstants>$(DefineConstants);UNITY_2022_2_OR_NEWER;UNITY_2022_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING</DefineConstants>
+        <DefineConstants>$(DefineConstants);ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING</DefineConstants>
+        <DefineConstants>$(DefineConstants);ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS</DefineConstants>
+        <DefineConstants>$(DefineConstants);ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS</DefineConstants>
+        <DefineConstants>$(DefineConstants);ENABLE_CLOUD_SERVICES_BUILD;ENABLE_EDITOR_GAME_SERVICES;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE</DefineConstants>
+        <DefineConstants>$(DefineConstants);ENABLE_WEBSOCKET_CLIENT;ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS</DefineConstants>
+        <DefineConstants>$(DefineConstants);ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI</DefineConstants>
+        <DefineConstants>$(DefineConstants);ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING</DefineConstants>
+        <DefineConstants>$(DefineConstants);ENABLE_NAVIGATION_PACKAGE_DEBUG_VISUALIZATION;ENABLE_NAVIGATION_HEIGHTMESH_RUNTIME_SUPPORT;ENABLE_NAVIGATION_UI_REQUIRES_PACKAGE</DefineConstants>
+        <DefineConstants>$(DefineConstants);PLATFORM_STANDALONE;TEXTCORE_1_0_OR_NEWER;UNITY_STANDALONE;ENABLE_RUNTIME_GI</DefineConstants>
+        <DefineConstants>$(DefineConstants);ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_NVIDIA;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC</DefineConstants>
+        <DefineConstants>$(DefineConstants);ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;PLATFORM_INITIALIZES_MEMORY_MANAGER_EXPLICITLY</DefineConstants>
+        <DefineConstants>$(DefineConstants);ENABLE_MONO;NET_4_6;NET_UNITY_4_8;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;ENABLE_UNITY_COLLECTIONS_CHECKS</DefineConstants>
+        <DefineConstants>$(DefineConstants);ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP</DefineConstants>
+
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <UnturnedReferencesCopyOutput Condition="'$(UnturnedReferencesCopyOutput)' == ''">$(MSBuildStartupDirectory)/Libraries</UnturnedReferencesCopyOutput>
+        <_HomeDir>$([System.Environment]::GetFolderPath(SpecialFolder.UserProfile))</_HomeDir>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(U3DSInstallDir)' != '' And '$(UnturnedBuild)' == 'Server' And exists('$(U3DSInstallDir)')">
+        <UnturnedInstallDir>$(U3DSInstallDir)</UnturnedInstallDir>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(UnturnedInstallDir)' != '' And !exists('$(UnturnedInstallDir)')">
+        <UnturnedInstallDir></UnturnedInstallDir>
+    </PropertyGroup>
+
+    <Choose>
+
+        <!-- Linux -->
+        <When Condition="$([MSBuild]::IsOSPlatform('LINUX'))">
+            <PropertyGroup Condition="'$(UnityInstallDir)' == '' Or !exists('$(UnityInstallDir)')">
+                <UnityInstallDir>$(_HomeDir)/Unity/Hub/Editor/$(UnityVersion)</UnityInstallDir>
+            </PropertyGroup>
+
+            <Choose>
+                <!-- Various steam install directories on linux (wtf why are there so many). -->
+                <When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.local/share/Steam/SteamApps/common/Unturned')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/.local/share/Steam/SteamApps/common/Unturned</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.local/share/Steam/SteamApps/common/U3DS')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/.local/share/Steam/SteamApps/common/U3DS</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Steam/SteamApps/common/Unturned')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/Steam/SteamApps/common/Unturned</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Steam/SteamApps/common/U3DS')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/Steam/SteamApps/common/U3DS</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/SteamApps/common/Unturned')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/.steam/SteamApps/common/Unturned</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/SteamApps/common/U3DS')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/.steam/SteamApps/common/U3DS</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/Steam/SteamApps/common/Unturned')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/.steam/Steam/SteamApps/common/Unturned</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/Steam/SteamApps/common/U3DS')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/.steam/Steam/SteamApps/common/U3DS</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/SteamApps/common/Unturned')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/SteamApps/common/Unturned</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/SteamApps/common/U3DS')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/SteamApps/common/U3DS</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/snap/steam/SteamApps/common/Unturned')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/snap/steam/SteamApps/common/Unturned</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/snap/steam/SteamApps/common/U3DS')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/snap/steam/SteamApps/common/U3DS</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.local/share/Steam/steamapps/common/Unturned')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/.local/share/Steam/steamapps/common/Unturned</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.local/share/Steam/steamapps/common/U3DS')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/.local/share/Steam/steamapps/common/U3DS</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Steam/steamapps/common/Unturned')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/Steam/steamapps/common/Unturned</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Steam/steamapps/common/U3DS')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/Steam/steamapps/common/U3DS</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/steamapps/common/Unturned')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/.steam/steamapps/common/Unturned</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/steamapps/common/U3DS')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/.steam/steamapps/common/U3DS</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/Steam/steamapps/common/Unturned')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/.steam/Steam/steamapps/common/Unturned</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.steam/Steam/steamapps/common/U3DS')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/.steam/Steam/steamapps/common/U3DS</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/steamapps/common/Unturned')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/steamapps/common/Unturned</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/steamapps/common/U3DS')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/.var/app/com.valvesoftware.Steam/.steam/steamapps/common/U3DS</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/snap/steam/steamapps/common/Unturned')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/snap/steam/steamapps/common/Unturned</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/snap/steam/steamapps/common/U3DS')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/snap/steam/steamapps/common/U3DS</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <Otherwise/>
+            </Choose>
+
+            <PropertyGroup Condition="'$(UnturnedInstallDir)' != ''">
+
+                <_UnturnedDllPath Condition="exists('$(UnturnedInstallDir)/Unturned_Data/Managed')">$(UnturnedInstallDir)/Unturned_Data/Managed</_UnturnedDllPath>
+                <_UnturnedDllPath Condition="'$(_UnturnedDllPath)' == ''">$(UnturnedInstallDir)/Unturned_Headless_Data/Managed</_UnturnedDllPath>
+                <_RocketDllPath>$(UnturnedInstallDir)/Extras/Rocket.Unturned</_RocketDllPath>
+
+            </PropertyGroup>
+
+        </When>
+
+        <!-- OSX -->
+        <When Condition="$([MSBuild]::IsOSPlatform('OSX'))">
+            <PropertyGroup Condition="'$(UnityInstallDir)' == '' Or !exists('$(UnityInstallDir)')">
+                <UnityInstallDir>/Applications/Unity/Hub/Editor/$(UnityVersion)</UnityInstallDir>
+            </PropertyGroup>
+
+            <Choose>
+                <!-- Various steam install directories on mac. -->
+                <When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Library/Application Support/Steam/SteamApps/common/Unturned')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/Library/Application Support/Steam/SteamApps/common/Unturned</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Library/Application Support/Steam/SteamApps/common/U3DS')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/Library/Application Support/Steam/SteamApps/common/U3DS</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Library/Application Support/Steam/steamapps/common/Unturned')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/Library/Application Support/Steam/steamapps/common/Unturned</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('$(_HomeDir)/Library/Application Support/Steam/steamapps/common/U3DS')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>$(_HomeDir)/Library/Application Support/Steam/steamapps/common/U3DS</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <Otherwise/>
+            </Choose>
+
+            <PropertyGroup Condition="'$(UnturnedInstallDir)' != ''">
+
+                <_UnturnedDllPath>$(UnturnedInstallDir)/Unturned.app/Contents/Resources/Data/Managed</_UnturnedDllPath>
+                <_RocketDllPath>$(UnturnedInstallDir)/Extras/Rocket.Unturned</_RocketDllPath>
+
+            </PropertyGroup>
+
+
+        </When>
+
+        <!-- Windows -->
+        <When Condition="$([MSBuild]::IsOSPlatform('WINDOWS'))">
+            <PropertyGroup Condition="'$(UnityInstallDir)' == '' Or !exists('$(UnityInstallDir)')">
+                <UnityInstallDir>C:\Program Files\Unity\Hub\Editor\$(UnityVersion)</UnityInstallDir>
+            </PropertyGroup>
+
+            <Choose>
+                <!-- Various steam install directories on windows. -->
+                <When Condition="$(UnturnedBuild) == 'Client' And '$(UnturnedInstallDir)' == '' And exists('C:\Program Files (x86)\Steam\steamapps\common\Unturned')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>C:\Program Files (x86)\Steam\steamapps\common\Unturned</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('C:\Program Files (x86)\Steam\steamapps\common\U3DS')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>C:\Program Files (x86)\Steam\steamapps\common\U3DS</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <When Condition="$(UnturnedBuild) == 'Server' And '$(UnturnedInstallDir)' == '' And exists('C:\SteamCMD\steamapps\common\U3DS')">
+                    <PropertyGroup>
+                        <UnturnedInstallDir>C:\SteamCMD\steamapps\common\U3DS</UnturnedInstallDir>
+                    </PropertyGroup>
+                </When>
+                <Otherwise/>
+            </Choose>
+
+            <PropertyGroup Condition="'$(UnturnedInstallDir)' != ''">
+
+                <_UnturnedDllPath Condition="exists('$(UnturnedInstallDir)\Unturned_Data\Managed')">$(UnturnedInstallDir)\Unturned_Data\Managed</_UnturnedDllPath>
+                <_UnturnedDllPath Condition="'$(_UnturnedDllPath)' == ''">$(UnturnedInstallDir)\Unturned_Headless_Data\Managed</_UnturnedDllPath>
+                <_RocketDllPath>$(UnturnedInstallDir)\Extras\Rocket.Unturned</_RocketDllPath>
+
+            </PropertyGroup>
+
+        </When>
+        <Otherwise/>
+    </Choose>
+
+    <PropertyGroup>
+
+        <_UnturnedDllPath Condition="!exists('$(_UnturnedDllPath)')"></_UnturnedDllPath>
+        <_RocketDllPath Condition="!exists('$(_RocketDllPath)')"></_RocketDllPath>
+
+    </PropertyGroup>
+
+
+    <Choose>
+        <When Condition="'$(_UnturnedDllPath)' != ''">
+            <ItemGroup>
+                <Reference Include="@(UnturnedReference->'%(Identity)')" HintPath="$(_UnturnedDllPath)/%(Identity).dll" Private="$(CopyUnturnedReferencesToOutput)" />
+            </ItemGroup>
+        </When>
+        <Otherwise>
+            <ItemGroup>
+                <Reference Include="@(UnturnedReference->'%(Identity)')" HintPath="$(UnturnedReferencesCopyOutput)/%(Identity).dll" Private="$(CopyUnturnedReferencesToOutput)" />
+            </ItemGroup>
+        </Otherwise>
+    </Choose>
+
+    <Choose>
+        <When Condition="'$(_RocketDllPath)' != ''">
+            <ItemGroup>
+                <Reference Include="@(RocketReference->'%(Identity)')" HintPath="$(_RocketDllPath)/%(Identity).dll" Private="$(CopyUnturnedReferencesToOutput)" />
+            </ItemGroup>
+        </When>
+        <Otherwise>
+            <ItemGroup>
+                <Reference Include="@(RocketReference->'%(Identity)')" HintPath="$(UnturnedReferencesCopyOutput)/%(Identity).dll" Private="$(CopyUnturnedReferencesToOutput)" />
+            </ItemGroup>
+        </Otherwise>
+    </Choose>
+
+    <Target AfterTargets="AfterBuild" Name="_Unturned_MSBuild_PrintInstallDirs" Condition="$(UnturnedReferenceDebugLog)" >
+
+        <Message Text="Looking for Unity installation at: &quot;$(UnityInstallDir)&quot;" Importance="High"/>
+        <Message Text="Found Unturned installation at: &quot;$(UnturnedInstallDir)&quot;" Importance="High"/>
+        <Message Text="Copying: $(CopyUnturnedReferencesToProject)" Importance="High"/>
+
+    </Target>
+
+    <!-- Check that references exist -->
+    <Target BeforeTargets="Build" Name="_Unturned_MSBuild_CheckLibsExists_Unturned_Src" Condition="'$(_UnturnedDllPath)' != '' And '@(UnturnedReference)' != ''">
+        <Error Condition="!exists('$(_UnturnedDllPath)/%(UnturnedReference.Identity).dll')"
+               Text="Reference not found: '$(_UnturnedDllPath)/%(UnturnedReference.Identity).dll'"
+               ContinueOnError="true"
+               Code="UNT001"/>
+    </Target>
+    <Target BeforeTargets="Build" Name="_Unturned_MSBuild_CheckLibsExists_Unturned_Lib" Condition="'$(_UnturnedDllPath)' == '' And '@(UnturnedReference)' != ''">
+        <Error Condition="!exists('$(UnturnedReferencesCopyOutput)/%(UnturnedReference.Identity).dll')"
+               Text="Reference not found: '$(UnturnedReferencesCopyOutput)/%(UnturnedReference.Identity).dll'"
+               ContinueOnError="true"
+               Code="UNT001"/>
+    </Target>
+    <Target BeforeTargets="Build" Name="_Unturned_MSBuild_CheckLibsExists_Rocket_Src" Condition="'$(_RocketDllPath)' != '' And '@(RocketReference)' != ''">
+        <Error Condition="!exists('$(_RocketDllPath)/%(RocketReference.Identity).dll')"
+               Text="Reference not found: '$(_RocketDllPath)/%(RocketReference.Identity).dll'"
+               ContinueOnError="true"
+               Code="UNT002"/>
+    </Target>
+    <Target BeforeTargets="Build" Name="_Unturned_MSBuild_CheckLibsExists_Rocket_Lib" Condition="'$(_RocketDllPath)' == '' And '@(RocketReference)' != ''">
+        <Error Condition="!exists('$(UnturnedReferencesCopyOutput)/%(RocketReference.Identity).dll')"
+               Text="Reference not found: '$(UnturnedReferencesCopyOutput)/%(RocketReference.Identity).dll'"
+               ContinueOnError="true"
+               Code="UNT002"/>
+    </Target>
+
+    <!-- Copy unturned files from U3DS to ~/Libraries -->
+    <Target Name="_Unturned_MSBuild_Copy_Unturned" AfterTargets="AfterBuild" Condition="$(CopyUnturnedReferencesToProject) And exists('$(_UnturnedDllPath)') And '@(UnturnedReference)' != ''">
+        <Message Text="Copying Unturned Libraries to: &quot;$(UnturnedReferencesCopyOutput)&quot;" Importance="High" Condition="$(UnturnedReferenceDebugLog)"/>
+        <Copy SourceFiles="$(_UnturnedDllPath)/%(UnturnedReference.Identity).dll"
+              DestinationFolder="$(UnturnedReferencesCopyOutput)"
+              SkipUnchangedFiles="True" />
+        <Copy SourceFiles="$(_UnturnedDllPath)/%(UnturnedReference.Identity).xml"
+                    Condition="exists('$(_UnturnedDllPath)/%(UnturnedReference.Identity).xml')"
+              DestinationFolder="$(UnturnedReferencesCopyOutput)"
+                    ContinueOnError="true"
+                    SkipUnchangedFiles="True" />
+    </Target>
+
+    <Target Name="_Unturned_MSBuild_Replace_Newtonsoft_Json_With_Package">
+
+        <!-- Check if referencing Newtonsoft.Json and urge to use package instead. -->
+        <Error Condition="'@(UnturnedReference->'%(Identity)')' == 'Newtonsoft.Json'"
+               Code="UNT003"
+               Text="Add a PackageReference to %(Identity) instead of using an UnturnedReference. Unturned uses v13.0.3. Click the error code to open NuGet."
+               File="$(MSBuildProjectFile)"
+               HelpLink="https://www.nuget.org/packages/Newtonsoft.Json/13.0.3"/>
+
+    </Target>
+
+
+    <!-- Remove files in unturned that arent included -->
+    <Target Name="_Unturned_MSBuild_Copy_RemoveUnusedFiles" AfterTargets="_Unturned_MSBuild_Copy_Unturned" Condition="$(DeleteUnusedUnturnedReferences) And $(CopyUnturnedReferencesToProject) And exists('$(UnturnedReferencesCopyOutput)')">
+
+        <ItemGroup>
+            <__Files Include="$(UnturnedReferencesCopyOutput)/*"/>
+            <FilesToDelete Include="@(__Files->'%(Filename)%(Extension)')"/>
+            <FilesToDelete Remove="@(UnturnedReference->'%(Identity).dll')" />
+            <FilesToDelete Remove="@(UnturnedReference->'%(Identity).xml')" />
+            <FilesToDelete Remove="@(RocketReference->'%(Identity).dll')" />
+            <FilesToDelete Remove="@(FilesToDelete)" Condition="!exists('$(_UnturnedDllPath)/%(Identity)') And !exists('$(_RocketDllPath)/%(Identity)')" />
+        </ItemGroup>
+
+        <Message Text="Deleting: @(FilesToDelete)" Importance="high" Condition="'@(FilesToDelete)' != ''"/>
+        <Delete Files="@(FilesToDelete->'$(UnturnedReferencesCopyOutput)/%(Identity)')" />
+
+    </Target>
+
+    <!-- Copy Rocket files from U3DS to ~/Libraries -->
+    <Target Name="_Unturned_MSBuild_Copy_Rocket" AfterTargets="AfterBuild" Condition="$(CopyUnturnedReferencesToProject) And exists('$(_RocketDllPath)') And '@(RocketReference)' != ''">
+        <Message Text="Copying Rocket Libraries to: &quot;$(UnturnedReferencesCopyOutput)&quot;" Importance="High" Condition="$(UnturnedReferenceDebugLog)"/>
+        <Copy SourceFiles="$(_RocketDllPath)/%(RocketReference.Identity).dll"
+              DestinationFolder="$(UnturnedReferencesCopyOutput)"
+              SkipUnchangedFiles="True" />
+    </Target>
+
+    <!-- Copy xml docs for unity files to U3DS -->
+    <Target Name="_Unturned_MSBuild_Copy_Unity2Unturned" AfterTargets="AfterBuild" Condition="exists('$(UnityInstallDir)/Editor/Data/Managed/UnityEngine') And exists('$(_UnturnedDllPath)') And '@(UnturnedReference)' != ''">
+        <Message Text="Copying Unity documentation from &quot;$(UnityInstallDir)&quot; to: &quot;$(_UnturnedDllPath)&quot;" Importance="High" Condition="$(UnturnedReferenceDebugLog)"/>
+        <Copy SourceFiles="$(UnityInstallDir)/Editor/Data/Managed/UnityEngine/%(UnturnedReference.Identity).xml"
+              Condition="exists('$(UnityInstallDir)/Editor/Data/Managed/UnityEngine/%(UnturnedReference.Identity).xml')"
+              DestinationFolder="$(_UnturnedDllPath)"
+              SkipUnchangedFiles="True" />
+    </Target>
+
+    <!-- Copy xml docs for unity files to ~/Libraries -->
+    <Target Name="_Unturned_MSBuild_Copy_Unity2Libraries" AfterTargets="AfterBuild" Condition="$(CopyUnturnedReferencesToProject) And exists('$(UnityInstallDir)/Editor/Data/Managed/UnityEngine') And '@(UnturnedReference)' != ''">
+        <Message Text="Copying Unity documentation from &quot;$(UnityInstallDir)&quot; to: &quot;$(UnturnedReferencesCopyOutput)&quot;" Importance="High" Condition="$(UnturnedReferenceDebugLog)"/>
+        <Copy SourceFiles="$(UnityInstallDir)/Editor/Data/Managed/UnityEngine/%(UnturnedReference.Identity).xml"
+              Condition="exists('$(UnityInstallDir)/Editor/Data/Managed/UnityEngine/%(UnturnedReference.Identity).xml')"
+              DestinationFolder="$(UnturnedReferencesCopyOutput)"
+              SkipUnchangedFiles="True" />
+    </Target>
+
+    <ItemGroup Condition="$(AddUnturnedGlobalUsings)">
+        <Using Remove="System.Net.Http" />
+        <Using Include="System.Collections" />
+        <Using Include="System.Collections.Generic" />
+        <Using Include="System.Threading" />
+        <Using Include="System.Threading.Tasks" />
+        <Using Include="System.Diagnostics.Contracts" />
+        <Using Include="System.Diagnostics.Contracts.PureAttribute">
+            <Alias>PureAttribute</Alias>
+        </Using>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1' And $(AddUnturnedGlobalUsings)">
+        <Using Include="System.Diagnostics.CodeAnalysis" />
+    </ItemGroup>
+
+    <!-- Conditional usings depending on which libs are available -->
+    <Target Name="_Unturned_MSBuild_AddUsingsForAssemblyCSharp" BeforeTargets="BeforeBuild" Condition="$(AddUnturnedGlobalUsings)">
+        <ItemGroup>
+            <__FilteredReferences Remove="@(__FilteredReferences)"/>
+            <__FilteredReferences Include="@(Reference)" Condition="'%(Identity)' == 'Assembly-CSharp'" />
+        </ItemGroup>
+
+        <ItemGroup Condition="'@(__FilteredReferences)' != ''">
+            <Using Include="SDG.Unturned" />
+            <Using Include="System.Version">
+                <Alias>Version</Alias>
+            </Using>
+            <Using Include="System.Action">
+                <Alias>Action</Alias>
+            </Using>
+        </ItemGroup>
+    </Target>
+    <Target Name="_Unturned_MSBuild_AddUsingsForSDGNetTransport" BeforeTargets="BeforeBuild" Condition="$(AddUnturnedGlobalUsings)">
+        <ItemGroup>
+            <__FilteredReferences Remove="@(__FilteredReferences)"/>
+            <__FilteredReferences Include="@(Reference)" Condition="'%(Identity)' == 'SDG.NetTransport'" />
+        </ItemGroup>
+
+        <ItemGroup Condition="'@(__FilteredReferences)' != ''">
+            <Using Include="SDG.NetTransport" />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="_Unturned_MSBuild_AddUsingsForUnityEngine" BeforeTargets="BeforeBuild" Condition="$(AddUnturnedGlobalUsings)">
+        <ItemGroup>
+            <__FilteredReferences Remove="@(__FilteredReferences)"/>
+            <__FilteredReferences Include="@(Reference)" Condition="'%(Identity)' == 'UnityEngine.CoreModule'" />
+        </ItemGroup>
+
+        <ItemGroup Condition="'@(__FilteredReferences)' != ''">
+            <Using Include="UnityEngine" />
+            <Using Include="UnityEngine.Object" >
+                <Alias>Object</Alias>
+            </Using>
+        </ItemGroup>
+    </Target>
+
+    <Target Name="_Unturned_MSBuild_AddUsingsForSteamworks" BeforeTargets="BeforeBuild" Condition="$(AddUnturnedGlobalUsings)">
+        <ItemGroup>
+            <__FilteredReferences Remove="@(__FilteredReferences)"/>
+            <__FilteredReferences Include="@(Reference)" Condition="'%(Identity)' == 'com.rlabrecque.steamworks.net'" />
+        </ItemGroup>
+
+        <ItemGroup Condition="'@(__FilteredReferences)' != ''">
+            <Using Include="Steamworks" />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="_Unturned_MSBuild_AddUsingsForLogging" BeforeTargets="BeforeBuild" Condition="$(AddUnturnedGlobalUsings)">
+        <ItemGroup>
+            <__FilteredPackageReferences Remove="@(__FilteredPackageReferences)"/>
+            <__FilteredPackageReferences Include="@(PackageReference)" Condition="'%(Identity)' == 'Microsoft.Extensions.Logging.Abstractions' Or '%(Identity)' == 'Microsoft.Extensions.Logging'" />
+        </ItemGroup>
+
+        <ItemGroup Condition="'@(__FilteredPackageReferences)' != ''">
+            <Using Include="Microsoft.Extensions.Logging" />
+            <Using Include="Microsoft.Extensions.Logging.ILogger">
+                <Alias>ILogger</Alias>
+            </Using>
+        </ItemGroup>
+    </Target>
+
+    <Target Name="_Unturned_MSBuild_AddUsingsForUniTask" BeforeTargets="BeforeBuild" Condition="$(AddUnturnedGlobalUsings)">
+        <ItemGroup>
+            <__FilteredReferences Remove="@(__FilteredReferences)"/>
+            <__FilteredPackageReferences Remove="@(__FilteredPackageReferences)"/>
+            <__FilteredPackageReferences Include="@(PackageReference)" Condition="'%(Identity)' == 'UniTask' Or '%(Identity)' == 'OpenMod.UniTask'" />
+            <__FilteredReferences Include="@(Reference)" Condition="'%(Identity)' == 'UniTask'" />
+        </ItemGroup>
+
+        <ItemGroup Condition="'@(__FilteredPackageReferences)' != '' Or '@(__FilteredReferences)' != '' ">
+            <Using Include="Cysharp.Threading.Tasks" />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="_Unturned_MSBuild_AddUsingsForRocket" BeforeTargets="BeforeBuild" Condition="$(AddUnturnedGlobalUsings)">
+        <ItemGroup>
+            <__FilteredReferences Remove="@(__FilteredReferences)"/>
+            <__FilteredReferences Include="@(Reference)" Condition="'%(Identity)' == 'Rocket.Unturned' Or '%(Identity)' == 'Rocket.API' Or '%(Identity)' == 'Rocket.Core'" />
+        </ItemGroup>
+
+        <ItemGroup Condition="'@(__FilteredReferences)' != ''">
+            <Using Include="Rocket.API" />
+            <Using Include="Rocket.API.Extensions" />
+            <Using Include="Rocket.Core" />
+            <Using Include="Rocket.Core.Commands" />
+            <Using Include="Rocket.Core.Extensions" />
+            <Using Include="Rocket.Core.Logging" />
+            <Using Include="Rocket.Core.Logging.Logger" >
+                <Alias>Logger</Alias>
+            </Using>
+            <Using Include="Rocket.Core.Permissions" />
+            <Using Include="Rocket.Core.Plugins" />
+            <Using Include="Rocket.Core.Steam" />
+            <Using Include="Rocket.Unturned" />
+            <Using Include="Rocket.Unturned.Chat" />
+            <Using Include="Rocket.Unturned.Effects" />
+            <Using Include="Rocket.Unturned.Enumerations" />
+            <Using Include="Rocket.Unturned.Events" />
+            <Using Include="Rocket.Unturned.Extensions" />
+            <Using Include="Rocket.Unturned.Items" />
+            <Using Include="Rocket.Unturned.Permissions" />
+            <Using Include="Rocket.Unturned.Player" />
+            <Using Include="Rocket.Unturned.Plugins" />
+            <Using Include="Rocket.Unturned.Skills" />
+        </ItemGroup>
+    </Target>
 
 
 </Project>
